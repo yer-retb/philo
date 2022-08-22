@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/22 10:33:40 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/22 13:07:12 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	*the_table(void *av)
 	i = 0;
 	if (i % 2 != 0)
 		usleep(1000);
-	while (i <= 5)
+	while (1)
 	{
 
 			pthread_mutex_lock(&src->fork[i]);
@@ -116,7 +116,7 @@ void creat_philo(t_philo *src, t_data *data)
 	while (++j < src->phi)
 		pthread_mutex_init(src->fork + i, NULL);
 	while (++i < src->phi)
-		pthread_create(src->philos + i, NULL, the_table, src);
+		pthread_create(&src->philos[i], NULL, the_table, src);
 	
 	i = -1;
 	j = -1;
@@ -143,7 +143,7 @@ int	main(int ac, char **av)
 
 	tour = 0;
 	src = malloc(sizeof(t_philo) * 5);
-	tab[0] = sr
+	// tab[0] = sr
 	data = malloc(sizeof(t_data));	
 	check_error(ac, av, src, data);
 	creat_philo(src, data);

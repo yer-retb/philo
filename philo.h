@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/22 09:40:57 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/22 12:48:32 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,9 @@ typedef struct n_data
 	int				tour;
 } t_data;
 
+void	creat_philo(t_philo *src, t_data *data);
+void	*the_table(void *av);
+void	check_error(int ac, char **av, t_philo *src, t_data *data);
+int		ft_atoi(char *str);
 
 #endif
