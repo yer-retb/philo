@@ -1,0 +1,5 @@
+make: Entering directory `/Users/yer-retb/Desktop/philo'
+gcc philo.c -o philo
+ 
+make: Leaving directory `/Users/yer-retb/Desktop/philo'
+ 

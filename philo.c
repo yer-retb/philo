@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/22 13:07:12 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/23 02:51:02 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_atoi(char *str)
 	return (rsl * sg);
 }
 
-void	check_error(int ac, char **av, t_philo *src, t_data *data)
+void	check_error(int ac, char **av, t_data *data)
 {
 	
 	if (ac < 5 || ac > 6)
@@ -49,102 +49,80 @@ void	check_error(int ac, char **av, t_philo *src, t_data *data)
 		printf("Error : Check your arguments\n");
 		return ;
 	}
-	if (ac == 6)
-	{
+	if (av[5])
 		data->tour = ft_atoi(av[5]);
-		data->sig = 5;
-	}
-	if (av[1])
-		src->phi = ft_atoi(av[1]);
-	if (av[2])
-		src->die = ft_atoi(av[2]);
-	if (av[3])
-		src->eat = ft_atoi(av[3]);
-	if (av[4])
-		src->sleep = ft_atoi(av[4]);
-	else
-		printf("Error : Check your arguments\n");
+	data->num_ph = ft_atoi(av[1]);
+	data->die = ft_atoi(av[2]);
+	data->eat = ft_atoi(av[3]);
+	data->sleep = ft_atoi(av[4]);
 }
-int sala = 0;
+
 void	*the_table(void *av)
 {
-	t_philo *src = (t_philo *)av;
+	t_data *data = (t_data *)av;
 	int i;
 
 	i = 0;
-	if (i % 2 != 0)
+	if (i % 2 == 0)
 		usleep(1000);
 	while (1)
 	{
-
-			pthread_mutex_lock(&src->fork[i]);
-			pthread_mutex_lock(&src->fork[i + 1 % (src->phi + 1)]);
-			printf("philo %d take fork => %d and fork => %d\n",i, i, ((i + 1) % (src->phi + 1)));
-			// printf("ok \n");
-			// printf("========>  %d\n", src->philos[i]);
-			sleep(1);
-			sala++;
-			pthread_mutex_unlock(&src->fork[i]);
-			pthread_mutex_unlock(&src->fork[i + 1 % src->phi]);
-		// else
-		// {
-		// 	pthread_mutex_lock(&src->fork[i]);
-		// 	pthread_mutex_lock(&src->fork[i + 1 % (src->phi + 1)]);
-		// 	printf("i => %d next => %d\n", i, ((i + 1) % (src->phi + 1)));
-		// 	sleep(1);
-		// 	printf("okay\n");
-		// 	pthread_mutex_unlock(&src->fork[i]);
-		// 	pthread_mutex_unlock(&src->fork[i + 1 % src->phi]);
-		// }
+		pthread_mutex_lock(&data->fork[i]);
+		pthread_mutex_lock(&data->fork[(i + 1) % data->num_ph]);
+		printf("philo %d has taken a fork\n", data->philo[i].id);
 		i++;
+		sleep(1);
+		pthread_mutex_unlock(&data->fork[i]);
+		pthread_mutex_unlock(&data->fork[(i + 1) % data->num_ph]);
 	}
 	return (NULL);
 }
 
-void creat_philo(t_philo *src, t_data *data)
+
+void creat_philo(t_data *data)
 {
 	int 	i;
 	int 	j;
-	char	*tab;
 
 	i = -1;
 	j = -1;
-	src->fork = malloc (sizeof(pthread_mutex_t) * src->phi);
-	src->philos = malloc (sizeof(pthread_t) * src->phi);
-	tab = malloc (sizeof(int) * (src->phi + 1));
-	// give_id(tab, src);
-	while (++j < src->phi)
-		pthread_mutex_init(src->fork + i, NULL);
-	while (++i < src->phi)
-		pthread_create(&src->philos[i], NULL, the_table, src);
-	
+	data->fork = malloc (sizeof(pthread_mutex_t) * data->num_ph);
+	data->philo->pt = malloc (sizeof(pthread_t) * data->num_ph);
+	while (++j < data->num_ph)
+		pthread_mutex_init(data->fork + i, NULL);
+	while (++i < data->num_ph)
+		pthread_create(&data->philo[i].pt, NULL, &the_table, data);
+		
 	i = -1;
 	j = -1;
-	while (1)
-	{
-		usleep(300);
-		if (sala == src->phi * src->eat)
-		{
-			break;
-		}
-	}
-	// while (++i < src->phi)
-	// 	pthread_join(src->philos[i], NULL);
-	while (++j < src->phi)
-		pthread_mutex_destroy(&src->fork[j]);
+	while (++i < data->num_ph)
+		pthread_join(data->philo[i].pt, NULL);
+	while (++j < data->num_ph)
+		pthread_mutex_destroy(&data->fork[j]);
 	
+}
+
+int	init_philo(t_data *data)
+{
+	int	i;
+	t_philo *philo;
+
+	data->philo = malloc(sizeof(t_philo) * data->num_ph);
+	i = 0;
+	while (i < data->num_ph)
+	{
+		data->philo[i].id = i + 1;
+		i++;
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	t_philo *src;
 	t_data	*data;
-	int tour;
 
-	tour = 0;
-	src = malloc(sizeof(t_philo) * 5);
-	// tab[0] = sr
-	data = malloc(sizeof(t_data));	
-	check_error(ac, av, src, data);
-	creat_philo(src, data);
+	data = malloc(sizeof(t_data));
+	check_error(ac, av, data);
+	init_philo(data);
+ 	creat_philo(data);
 }
