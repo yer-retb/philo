@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/25 03:24:55 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/26 22:12:57 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 typedef struct n_philo
 {
-	int				tem;
+	long int		temp;
 	int				id;
 	long int		time_start;
 	int				left_f;
@@ -44,11 +44,11 @@ typedef struct n_data
 	pthread_mutex_t *print;
 } t_data;
 
-void	creat_philo(t_data *data);
-void	*the_table(void *av);
-void	check_error(int ac, char **av,t_data *data);
-int		ft_atoi(char *str);
+void		creat_philo(t_data *data);
+void		*the_table(void *av);
+void		check_error(int ac, char **av,t_data *data);
+int			ft_atoi(char *str);
 long int	get_time(void);
-void	ft_usleep(int time);
+void		ft_usleep(int time);
 
 #endif
