@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/26 22:12:57 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/27 04:53:18 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct n_philo
 
 typedef struct n_data
 {	
+	
 	long int		time;
 	int				num_ph;
 	int				die;

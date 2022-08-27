@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/26 22:51:16 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/27 05:46:09 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,30 @@ int	should_die(t_philo *philo)
 void	*the_table(void *av)
 {
 	t_philo *philo = (t_philo*)av;
-	int i = 0;
 
 	while (1)
 	{
 		pthread_mutex_lock(&philo->d->fork[philo->left_f]);
 		pthread_mutex_lock(philo->d->print);
-		printf("\033[1;32m%ld ms philo %d has taken a fork\n",get_time() - philo[i].time_start, philo[i].id);
+		printf("\033[1;32m%ld ms philo %d has taken a fork\n",get_time() - philo->time_start, philo->id);
 		pthread_mutex_unlock(philo->d->print);
 		pthread_mutex_lock(&philo->d->fork[philo->right_f]);
 		pthread_mutex_lock(philo->d->print);
-		printf("\033[1;32m%ld ms philo %d has taken a fork\n",get_time() - philo[i].time_start, philo[i].id);
+		printf("\033[1;32m%ld ms philo %d has taken a fork\n",get_time() - philo->time_start, philo->id);
 		pthread_mutex_unlock(philo->d->print);
 		pthread_mutex_lock(philo->d->print);
-		printf("\033[1;33m%ld ms philo %d is eating\n",get_time() - philo[i].d->time, philo[i].id);
-		philo[i].temp = get_time() - philo[i].d->time;
+		printf("\033[1;33m%ld ms philo %d is eating\n",get_time() - philo->d->time, philo->id);
+		philo->temp = get_time() - philo->d->time;
 		pthread_mutex_unlock(philo->d->print);
-		ft_usleep(philo[i].d->eat);
+		ft_usleep(philo->d->eat);
 		pthread_mutex_lock(philo->d->print);
-		printf("\033[1;34m%ld ms philo %d is sleeping\n",get_time() - philo[i].d->time, philo[i].id);
+		printf("\033[1;34m%ld ms philo %d is sleeping\n",get_time() - philo->d->time, philo->id);
 		pthread_mutex_unlock(philo->d->print);
 		pthread_mutex_unlock(&philo->d->fork[philo->left_f]);
 		pthread_mutex_unlock(&philo->d->fork[philo->right_f]);
-		ft_usleep(philo[i].d->sleep);
+		ft_usleep(philo->d->sleep);
 		pthread_mutex_lock(philo->d->print);
-		printf("\033[1;30m%ld ms philo %d is thinking\n",get_time() - philo[i].d->time, philo[i].id);
+		printf("\033[1;30m%ld ms philo %d is thinking\n",get_time() - philo->d->time, philo->id);
 		pthread_mutex_unlock(philo->d->print);
 		// if (should_die(&philo[i]))
 		// 	exit(1);
@@ -101,6 +100,12 @@ void	*the_table(void *av)
 	return (0);
 }
 
+int	deff(t_philo data)
+{
+	if ((get_time() - data.d->time) - (data.temp) >= data.d->die)
+		return 0;
+	return 1;
+}
 
 void creat_philo(t_data *data)
 {
@@ -122,18 +127,19 @@ void creat_philo(t_data *data)
 		usleep(60);
 	}
 	j = -1;
-	i = 1;
+	i = 0;
 	while (1)
 	{
-		//printf("\033[1;31mphilo %d die in %ld\n", data->philo->id, (data->time - data->philo[i].tem));
-		if ((get_time() - data->time) - (data->philo[i].temp) >= data->die)
+		if (!deff(data->philo[i]))
 		{
+			pthread_mutex_lock(data->print);
 			printf("\033[1;31m%ld ms philo %d die\n",((get_time() - data->time) - (data->philo[i].temp)), data->philo[i].id);
+			pthread_mutex_unlock(data->print);
 			return ;
 		}
 		i++;
 		if (i == data->num_ph)
-			i = 1;
+			i = 0;
 	}
 	while (++j < data->num_ph)
 		pthread_mutex_destroy(&data->fork[j]);
