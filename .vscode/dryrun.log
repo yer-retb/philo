@@ -1,5 +1,5 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/yer-retb/Desktop/philo'
-make: Nothing to be done for `all'.
+gcc -Wall -Wextra -Werror  philo.c philo_utils.c -o philo
 make: Leaving directory `/Users/yer-retb/Desktop/philo'
  

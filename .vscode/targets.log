@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Sat Aug 27 05:43:51 2022
+# Make data base, printed on Tue Aug 30 00:28:46 2022
 
 # Variables
 
@@ -37,9 +36,9 @@ VSCODE_CWD = /
 # makefile (from `Makefile', line 19)
 srcs = philo.c philo_utils.c
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.7EDz6tXIHT/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.5YAB7Tbcl2/Render
 # environment
-PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Frameworks/Mono.framework/Versions/Current/Commands
 # environment
 LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
@@ -47,7 +46,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.SG0sMn2VmM/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.MHCnzBgIYp/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -113,7 +112,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000004.Electron
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000001.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
@@ -145,7 +144,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 31492
+VSCODE_PID = 6887
 # variable set hash-table stats:
 # Load=67/1024=7%, Rehash=0, Collisions=1/93=1%
 
@@ -175,9 +174,8 @@ all: philo
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 philo:
- 
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-27 04:55:12
+#  Last modified 2022-08-30 00:23:52
 #  File has been updated.
 #  Successfully updated.
 #  commands to execute (from `Makefile', line 24):
@@ -204,7 +202,7 @@ push:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-27 04:55:03
+#  Last modified 2022-08-28 21:12:51
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -250,6 +248,6 @@ clean:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Aug 27 05:43:51 2022
+# Finished Make data base on Tue Aug 30 00:28:46 2022
 
  

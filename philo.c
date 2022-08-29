@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/27 05:46:09 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/30 00:25:49 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,42 @@
 int	ft_atoi(char *str)
 {
 	int i;
-	int sg;
 	unsigned long rsl;
 
 	i = 0;
-	sg = 1;
 	rsl = 0;
-	if (str[i] == '-')
-	{
-		sg *= -1;
-		i++;
-	}
-	while (str[i])
-	{
-		if ((str[i] >= 0 && str[i] < 48) || (str[i] > 57))
-			printf("Error\n");
-		i++;
-	}
-	i = 0;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		rsl = rsl * 10 + str[i] - 48;
 		i++;
 	}
-	return (rsl * sg);
+	return (rsl);
 }
 
-void	check_error(int ac, char **av, t_data *data)
+int	check_error(int ac, char **av, t_data *data)
 {
+	int	i;
+	int	j;
 	
+	i = 1;
 	if (ac < 5 || ac > 6)
 	{
 		printf("Error : Check your arguments\n");
-		return ;
+		return 0;
+	}
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if ((av[i][j] >= 0 && av[i][j] < 48) || (av[i][j] > 57) || (av[i][0] == '0'))
+			{
+				printf("Error : Check your arguments\n");
+				return (0);
+			}
+			j++;
+		}
+		i++;
 	}
 	if (av[5])
 		data->tour = ft_atoi(av[5]);
@@ -55,15 +58,7 @@ void	check_error(int ac, char **av, t_data *data)
 	data->die = ft_atoi(av[2]);
 	data->eat = ft_atoi(av[3]);
 	data->sleep = ft_atoi(av[4]);
-}
-
-int	should_die(t_philo *philo)
-{
-
-	// printf("time should die %ld \n", get_time() - philo->tem);
-	if (philo->temp - get_time() > philo->d->die)
-		return 1;
-	return 0;
+	return 1;
 }
 
 void	*the_table(void *av)
@@ -83,8 +78,11 @@ void	*the_table(void *av)
 		pthread_mutex_lock(philo->d->print);
 		printf("\033[1;33m%ld ms philo %d is eating\n",get_time() - philo->d->time, philo->id);
 		philo->temp = get_time() - philo->d->time;
+		philo->d->sig += 1;
+		philo->flag = 1;
 		pthread_mutex_unlock(philo->d->print);
 		ft_usleep(philo->d->eat);
+		philo->flag = 0;
 		pthread_mutex_lock(philo->d->print);
 		printf("\033[1;34m%ld ms philo %d is sleeping\n",get_time() - philo->d->time, philo->id);
 		pthread_mutex_unlock(philo->d->print);
@@ -94,8 +92,6 @@ void	*the_table(void *av)
 		pthread_mutex_lock(philo->d->print);
 		printf("\033[1;30m%ld ms philo %d is thinking\n",get_time() - philo->d->time, philo->id);
 		pthread_mutex_unlock(philo->d->print);
-		// if (should_die(&philo[i]))
-		// 	exit(1);
 	}
 	return (0);
 }
@@ -111,6 +107,7 @@ void creat_philo(t_data *data)
 {
 	int 	i;
 	int 	j;
+	int x = 0;
 
 	i = -1;
 	j = -1;
@@ -123,18 +120,18 @@ void creat_philo(t_data *data)
 	while (++i < data->num_ph)
 	{
 		pthread_create(&data->philo[i].pt, NULL, &the_table, &data->philo[i]);
-		// ft_usleep(200);
 		usleep(60);
 	}
 	j = -1;
 	i = 0;
 	while (1)
 	{
-		if (!deff(data->philo[i]))
+		if ((data->sig / data->tour ) == data->num_ph)
+			return ;
+		if (!deff(data->philo[i]) && data->philo[i].flag != 1)
 		{
 			pthread_mutex_lock(data->print);
 			printf("\033[1;31m%ld ms philo %d die\n",((get_time() - data->time) - (data->philo[i].temp)), data->philo[i].id);
-			pthread_mutex_unlock(data->print);
 			return ;
 		}
 		i++;
@@ -172,7 +169,9 @@ int	main(int ac, char **av)
 	t_data	*data;
 
 	data = malloc(sizeof(t_data));
-	check_error(ac, av, data);
-	init_philo(data);
- 	creat_philo(data);
+	if (check_error(ac, av, data))
+	{
+		init_philo(data);
+ 		creat_philo(data);
+	}
 }

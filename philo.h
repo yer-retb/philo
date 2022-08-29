@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/27 04:53:18 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/08/29 20:14:10 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,27 @@
 
 typedef struct n_philo
 {
-	long int		temp;
+	
+	int				flag;	
 	int				id;
-	long int		time_start;
 	int				left_f;
 	int				right_f;
+	long int		time_start;
+	long int		temp;
 	pthread_t		pt;
 	struct n_data	*d;
 } t_philo;
 
 typedef struct n_data
 {	
-	
-	long int		time;
+
+	int 			sig;
 	int				num_ph;
 	int				die;
 	int				eat;
 	int				sleep;
-	int 			sig;
 	int				tour;
+	long int		time;
 	t_philo			*philo;
 	pthread_mutex_t *fork;
 	pthread_mutex_t *print;
@@ -47,7 +49,7 @@ typedef struct n_data
 
 void		creat_philo(t_data *data);
 void		*the_table(void *av);
-void		check_error(int ac, char **av,t_data *data);
+int			check_error(int ac, char **av,t_data *data);
 int			ft_atoi(char *str);
 long int	get_time(void);
 void		ft_usleep(int time);
