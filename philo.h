@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/08/29 20:14:10 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/01 00:31:35 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct n_data
 	t_philo			*philo;
 	pthread_mutex_t *fork;
 	pthread_mutex_t *print;
+	pthread_mutex_t *test;
 } t_data;
 
 void		creat_philo(t_data *data);
