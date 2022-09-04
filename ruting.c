@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 01:30:06 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/04 01:30:53 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 05:18:34 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	taking_and_eating(t_philo *philo)
 		get_time() - philo->d->time, philo->id);
 	philo->temp = get_time() - philo->d->time;
 	pthread_mutex_lock(philo->d->test);
-	philo->d->sig += 1;
+	if (philo->d->tour != -1)
+		philo->d->sig += 1;
 	pthread_mutex_unlock(philo->d->test);
 	pthread_mutex_unlock(philo->d->print);
 	ft_usleep(philo->d->eat);
@@ -45,12 +46,12 @@ void	*the_table(void *av)
 	while (1)
 	{
 		taking_and_eating(philo);
+		pthread_mutex_unlock(&philo->d->fork[philo->left_f]);
+		pthread_mutex_unlock(&philo->d->fork[philo->right_f]);
 		pthread_mutex_lock(philo->d->print);
 		printf("\033[1;34m%ld ms philo %d is sleeping\n",
 			get_time() - philo->d->time, philo->id);
 		pthread_mutex_unlock(philo->d->print);
-		pthread_mutex_unlock(&philo->d->fork[philo->left_f]);
-		pthread_mutex_unlock(&philo->d->fork[philo->right_f]);
 		ft_usleep(philo->d->sleep);
 		pthread_mutex_lock(philo->d->print);
 		printf("\033[1;30m%ld ms philo %d is thinking\n",
@@ -69,10 +70,8 @@ int	deff(t_philo data)
 
 int	timing(t_data *data)
 {
-	pthread_mutex_lock(data->test);
 	if ((data->sig / data->tour) == data->num_ph)
 		return (0);
-	pthread_mutex_unlock(data->test);
 	return (1);
 }
 
@@ -84,7 +83,7 @@ void	ruting(t_data *data)
 	make_philos(data);
 	while (1)
 	{
-		if (!(timing(data)))
+		if (!(timing(data)) && data->tour != -1)
 			return ;
 		if (!deff(data->philo[i]))
 		{

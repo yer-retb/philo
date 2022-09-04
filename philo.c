@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/04 01:30:48 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 05:05:51 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	creat_philo(t_data *data)
 
 	i = 0;
 	j = -1;
-	data->philo = malloc(sizeof(t_philo) * data->num_ph);
+	data->philo = malloc(sizeof(t_data) * data->num_ph);
 	data->fork = malloc (sizeof(pthread_mutex_t) * data->num_ph);
 	data->print = malloc (sizeof(pthread_mutex_t));
 	data->test = malloc (sizeof(pthread_mutex_t));

@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:16:52 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/04 01:17:12 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 04:38:09 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	ft_atoi(char *str)
 
 void	passing_args(t_data *data, char **av)
 {
+	data->tour = -1;
 	if (av[5])
 		data->tour = ft_atoi(av[5]);
 	data->num_ph = ft_atoi(av[1]);
