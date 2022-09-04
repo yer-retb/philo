@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 15:27:35 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/04 05:05:51 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:39:24 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ void	creat_philo(t_data *data)
 	if (!data->philo || !data->fork || !data->print || !data->test)
 		return ;
 	pthread_mutex_init(data->print, NULL);
+	pthread_mutex_init(data->test, NULL);
 	while (++j < data->num_ph)
 		pthread_mutex_init(&data->fork[j], NULL);
 	ruting(data);
 	j = -1;
 	while (++j < data->num_ph)
 		pthread_mutex_destroy(&data->fork[j]);
+	pthread_mutex_destroy(data->test);
 }
 
 int	main(int ac, char **av)

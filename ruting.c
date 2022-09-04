@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 01:30:06 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/04 05:18:34 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:43:14 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,14 @@ int	deff(t_philo data)
 
 int	timing(t_data *data)
 {
-	if ((data->sig / data->tour) == data->num_ph)
+	int	signal;
+
+	signal = 0;
+	pthread_mutex_lock(data->test);
+	if (data->sig / data->tour == data->num_ph)
+		signal = 1;
+	pthread_mutex_unlock(data->test);
+	if (signal)
 		return (0);
 	return (1);
 }
