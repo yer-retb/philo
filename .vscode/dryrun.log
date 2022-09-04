@@ -1,6 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory `/Users/yer-retb/Desktop/philo'
-make: Nothing to be done for `all'.
- 
-make: Leaving directory `/Users/yer-retb/Desktop/philo'
- 

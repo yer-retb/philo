@@ -6,7 +6,7 @@
 #    By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/22 11:41:17 by yer-retb          #+#    #+#              #
-#    Updated: 2022/09/01 04:13:18 by yer-retb         ###   ########.fr        #
+#    Updated: 2022/09/04 01:31:37 by yer-retb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ cc = gcc
 
 cflag = -Wall -Wextra -Werror #-g -fsanitize=thread
 
-srcs = philo.c philo_utils.c
+srcs = philo.c philo_utils.c ruting.c
 
 all : $(name)
 

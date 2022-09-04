@@ -6,7 +6,7 @@
 /*   By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 17:41:57 by yer-retb          #+#    #+#             */
-/*   Updated: 2022/09/01 00:31:35 by yer-retb         ###   ########.fr       */
+/*   Updated: 2022/09/04 01:29:39 by yer-retb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 typedef struct n_philo
 {
-	
 	int				flag;	
 	int				id;
 	int				left_f;
@@ -30,12 +29,12 @@ typedef struct n_philo
 	long int		temp;
 	pthread_t		pt;
 	struct n_data	*d;
-} t_philo;
+
+}t_philo;
 
 typedef struct n_data
-{	
-
-	int 			sig;
+{
+	int				sig;
 	int				num_ph;
 	int				die;
 	int				eat;
@@ -43,16 +42,21 @@ typedef struct n_data
 	int				tour;
 	long int		time;
 	t_philo			*philo;
-	pthread_mutex_t *fork;
-	pthread_mutex_t *print;
-	pthread_mutex_t *test;
-} t_data;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	*print;
+	pthread_mutex_t	*test;
+}t_data;
 
 void		creat_philo(t_data *data);
 void		*the_table(void *av);
-int			check_error(int ac, char **av,t_data *data);
+int			check_error(int ac, char **av, t_data *data);
 int			ft_atoi(char *str);
 long int	get_time(void);
 void		ft_usleep(int time);
+void		taking_and_eating(t_philo *philo);
+void		make_philos(t_data *data);
+int			deff(t_philo data);
+int			timing(t_data *data);
+void		ruting(t_data *data);
 
 #endif
