@@ -6,7 +6,7 @@
 #    By: yer-retb <yer-retb@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/22 11:41:17 by yer-retb          #+#    #+#              #
-#    Updated: 2022/09/04 18:41:13 by yer-retb         ###   ########.fr        #
+#    Updated: 2022/09/04 18:44:03 by yer-retb         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,5 +34,5 @@ re : clean all
 push : 
 	git add .
 	git status
-	git commit -m "last"
+	git commit -m "finel"
 	git push github master
